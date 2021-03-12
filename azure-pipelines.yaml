@@ -17,15 +17,13 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
-        rootFolderOrFile: 'path/to/fakerestapi'
+        rootFolderOrFile: '/fakerestapi'
         includeRootFolder: false
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
-- stage: Run_FakeRestAPI_Tests
-  jobs:
   - deployment: FakeRestAPI
     pool:
       vmImage: 'Ubuntu-16.04'
