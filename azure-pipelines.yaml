@@ -36,7 +36,7 @@ stages:
             displayName: 'Deploy Azure Web App (FakeRestAPI)'
             inputs:
               azureSubscription: 'DEMA Final Project CI/CD'
-              appName: 'FakeRestAPI'
+              appName: 'Ghawanni-Udacity-Final-Project-AppService'
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   # - deployment: VMDeploy
