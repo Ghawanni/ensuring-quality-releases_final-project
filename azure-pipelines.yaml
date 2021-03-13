@@ -35,13 +35,17 @@ stages:
           - download: current
             displayName: Download FakeRestAPI Artifact
             artifact: drop-fakerestapi
-          - task: AzureWebApp@1
+
+          - task: AzureRmWebAppDeployment@4
             displayName: 'Deploy Azure Web App (FakeRestAPI)'
             inputs:
+              ConnectionType: 'AzureRM'
               azureSubscription: 'DEMA Final Project CI/CD'
-              appName: 'Ghawanni-Udacity-Final-Project-AppService'
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+              appType: 'webApp'
+              WebAppName: 'Ghawanni-Udacity-Final-Project-AppService'
+              packageForLinux: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
+              enableCustomDeployment: true
+              DeploymentType: 'zipDeploy'
   # - deployment: VMDeploy
   #   displayName: NAME
   #   environment:
