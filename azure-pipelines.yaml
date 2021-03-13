@@ -1,4 +1,11 @@
 name: Azure Pipelines
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'DEMA Final Project CI/CD'
+    appType: 'webApp'
+    WebAppName: 'Ghawanni-Udacity-Final-Project-AppService'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 variables:
   python.version: '3.7.6'
 stages:
