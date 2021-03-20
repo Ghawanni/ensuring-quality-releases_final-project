@@ -327,7 +327,7 @@
             </elementProp>
             <elementProp name="CSV_FILE_PATH" elementType="Argument">
               <stringProp name="Argument.name">CSV_FILE_PATH</stringProp>
-              <stringProp name="Argument.value">/Users/mohammedghawanni/Udacity/Azure-DevOps-Engineer-Nanodegree/Final Project/Project Starter Resources/automatedtesting/jmeter/books.csv</stringProp>
+              <stringProp name="Argument.value">./books.csv</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="POST_AUTHOR" elementType="Argument">
