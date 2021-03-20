@@ -11,21 +11,21 @@ stages:
     # Needed for Terraform VM deployment
     - task: InstallSSHKey@0
       inputs:
-        knownHostsEntry: 'KNOWN_HOSTS_STRING'
-        sshPublicKey: 'PUBLIC_KEY'
-        sshKeySecureFile: 'id_rsa'
+        knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ'
+        sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC210fnU86sv+NxgsyUECP/fvoAsrLD0PUT/GjYSyK9emRqSIiwfK47Tqp1e7WxP18WiFladcKXpSjO1+kx5L1dDydDWcBI/3vnULdlOdmNRnhb2b83hrTWolHbVgpryY4OLQSDoxWv6VcSOdfVOTthGjF1G1dHzdx91a1xaT7e9viOOL104yLXYKAgT0X/IgZrUM1M48ua+mTmC+IxAB+XegnuN3x/buY0vSvGKoWNkQUnKUkPSHqBbvuIxVHfzAeh50xUbG/9ZXoteHF0L2l0IN9UUY0nR0epoE46faDSvvS3Z56bUo14a8n6hsdaWWk574Gu/cSeWWRYXkFkp48WC0EoZeRUDHb2atkbNZl4eaqKWfJpbpjcRzYSOWSORgyb//l0jP/GOiT40xJdJuY0pfZZXAW4mI/RUNtKc/RWPCRUjxH8ZBI7LsUETNCT7iWZ6dXkPX6yh7EruJIYsE2nauVS/hhvy4CETXOSjlIOZAJLq0tHGpBp4whbGjDEPuU= mohammedghawanni@Mohammeds-MacBook-Pro-4.local'
+        sshKeySecureFile: 'terraform-id'
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
-        rootFolderOrFile: 'path/to/fakerestapi'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
         includeRootFolder: false
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
-- stage: Run FakeRestAPI Tests
-  jobs:
+- stage: Deploy
+  jobs:  
   - deployment: FakeRestAPI
     pool:
       vmImage: 'Ubuntu-16.04'
@@ -34,13 +34,38 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
+          - download: current
+            displayName: Download FakeRestAPI Artifact
+            artifact: drop-fakerestapi
+
+          - task: AzureRmWebAppDeployment@4
+            displayName: 'Deploy Azure Web App (FakeRestAPI)'
             inputs:
-              azureSubscription: '4fc8a9ce-bdb4-476f-aa96-2948a69c3f62'
-              appName: 'FakeAPI'
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'DEMA Final Project CI/CD'
+              appType: 'webApp'
+              WebAppName: 'Ghawanni-Udacity-Final-Project-AppService'
+              packageForLinux: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
+              enableCustomDeployment: true
+              DeploymentType: 'zipDeploy'
+- stage: Test
+  jobs:
+  - job: LoadTest
+    pool:
+      name: Hosted Ubuntu 1604
+    steps:
+    - task: JMeterInstaller@0
+      inputs:
+        jmeterVersion: '5.2.1'
+    - task: CmdLine@2
+      displayName: "Jmeter Load Test"
+      inputs:
+        script: 'jmeter -n -t $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/Load.jmx -l $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load-results-report.csv -e -o $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load_html_report'
+    - task: CmdLine@2
+      displayName: "Jmeter Endurance Test"
+      inputs:
+        script: 'jmeter -n -t $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/Endurance.jmx -l $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance-results-report.csv -e -o $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance_html_report'
+
   # - deployment: VMDeploy
   #   displayName: NAME
   #   environment:
