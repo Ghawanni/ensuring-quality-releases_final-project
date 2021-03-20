@@ -1,4 +1,0 @@
-timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
-1616224268145,1207,POST Books,200,OK,Endurance Test 1-1,text,true,,400,405,1,1,https://ghawanni-udacity-final-project-appservice.azurewebsites.net/api/Books,1207,0,998
-1616224269352,284,GET Book By ID,200,OK,Endurance Test 1-1,text,true,,4734,225,1,1,https://ghawanni-udacity-final-project-appservice.azurewebsites.net/api/Books/1,281,0,0
-1616224269637,2636,GET All Books,200,OK,Endurance Test 1-1,text,true,,902683,223,1,1,https://ghawanni-udacity-final-project-appservice.azurewebsites.net/api/Books,996,0,684
