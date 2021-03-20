@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "968b3a18-cc72-48a2-9b6b-e8619b4aaca8",
-		"name": "Starter APIs",
+		"_postman_id": "ef21140c-e373-4ba9-8a93-b40ec80a680f",
+		"name": "Udacity DEMA Final Project - FakeRestAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,11 +11,21 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "38b1717c-45ae-477f-8dae-8e889ba381d5",
 						"exec": [
 							"pm.test(\"Successful response\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"success\");",
 							"});",
+							"pm.test(\"Correct Name\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"name\"));",
+							"});",
+							"pm.test(\"Correct Salary\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"salary\"));",
+							"});",
+							"pm.test(\"Correct Age\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"age\"));",
+							"});",
+							"",
+							"",
 							"var json = pm.response.json();",
 							"pm.environment.set(\"id\", json.data.id);"
 						],
@@ -36,12 +46,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://dummy.restapiexample.com/api/v1/create",
-					"protocol": "http",
+					"raw": "{{restapi_url}}/api/v1/create",
 					"host": [
-						"dummy",
-						"restapiexample",
-						"com"
+						"{{restapi_url}}"
 					],
 					"path": [
 						"api",
@@ -58,7 +65,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "af3cb111-e3ac-4174-b8ca-7f4127a0285d",
 						"exec": [
 							"pm.test(\"Successful response\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"success\");",
@@ -88,7 +94,147 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Employee of ID 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"});",
+							"var json = pm.response.json();",
+							"pm.environment.set(\"id\", json.data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{restapi_url}}/api/v1/employee/{{id}}",
+					"host": [
+						"{{restapi_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recently Created Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"});",
+							"var json = pm.response.json();",
+							"pm.environment.set(\"id\", json.data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{restapi_url}}/api/v1/employee/{{id}}",
+					"host": [
+						"{{restapi_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Recently Created Employee (Not-Allowed)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Failed Response - 404 Not Allowed\", function () {",
+							"    pm.expect(pm.response.code === 405);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{restapi_url}}/api/v1/employee/{{id}}",
+					"host": [
+						"{{restapi_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
 		}
 	],
-	"protocolProfileBehavior": {}
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "restapi_url",
+			"value": "http://dummy.restapiexample.com"
+		},
+		{
+			"key": "name",
+			"value": "Mohammed Ghawanni"
+		},
+		{
+			"key": "salary",
+			"value": "17000"
+		},
+		{
+			"key": "age",
+			"value": "25"
+		}
+	]
 }
