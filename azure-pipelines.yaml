@@ -63,12 +63,14 @@ stages:
         script: |
           mkdir -p load_html_report
           'jmeter -n -t $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/Load.jmx -l $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load-results-report.csv -e -o $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load_html_report'
+        workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/
     - task: CmdLine@2
       displayName: "Jmeter Endurance Test"
       inputs:
         script: |
           mkdir -p endurance_html_report
           'jmeter -n -t $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/Endurance.jmx -l $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance-results-report.csv -e -o $(System.DefaultWorkingDirectory)/reports/endurance_html_report'
+        workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance_html_report'
