@@ -544,7 +544,7 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename">/Users/mohammedghawanni/Udacity/Azure-DevOps-Engineer-Nanodegree/Final Project/Project Starter Resources/automatedtesting/jmeter/results-report.csv</stringProp>
+          <stringProp name="filename">./load-results-report.csv</stringProp>
           <boolProp name="ResultCollector.success_only_logging">true</boolProp>
         </ResultCollector>
         <hashTree/>
