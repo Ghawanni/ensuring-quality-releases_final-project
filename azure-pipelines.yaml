@@ -75,12 +75,30 @@ stages:
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance_html_report'
         ArtifactName: 'drop-endurance-report'
-        publishLocation: 'Container'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load_html_report'
         ArtifactName: 'drop-load-report'
-        publishLocation: 'Container'
+  - job: IntegrationTesting
+    pool:
+      name: Hosted Ubuntu 1604
+    steps:
+      - task: CmdLine@2
+        displayName: Install Newman Runner
+        inputs: 
+          script: npm install -g newman
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+      - task: CmdLine@2
+        displayName: Run Newman Runner
+        inputs:
+          script: newman run StarterAPIs.json -e final_project_postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml 
+          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/*.xml'
+          searchFolder: 
+          testRunTitle: 'Integration Tests'
   # - deployment: VMDeploy
   #   displayName: NAME
   #   environment:
