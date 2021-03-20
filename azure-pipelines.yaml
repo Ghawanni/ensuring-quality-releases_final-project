@@ -61,6 +61,8 @@ stages:
       displayName: "Jmeter Load Test"
       inputs:
         script: |
+          rm load-results-report.csv
+          touch load-results-report.csv
           mkdir -p load_html_report
           jmeter -n -t Load.jmx -l load-results-report.csv -e -o load_html_report
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/'
@@ -68,6 +70,8 @@ stages:
       displayName: "Jmeter Endurance Test"
       inputs:
         script: |
+          rm endurance-results-report.csv
+          touch endurance-results-report.csv
           mkdir -p endurance_html_report
           jmeter -n -t Endurance.jmx -l endurance-results-report.csv -e -o endurance_html_report
         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/'
