@@ -105,8 +105,15 @@
 							"pm.test(\"Successful response\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"success\");",
 							"});",
-							"var json = pm.response.json();",
-							"pm.environment.set(\"id\", json.data.id);"
+							"pm.test(\"Correct Name\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Tiger Nixon\");",
+							"});",
+							"pm.test(\"Correct Salary\", function () {",
+							"    pm.expect(pm.response.text()).to.include(320800);",
+							"});",
+							"pm.test(\"Correct Age\", function () {",
+							"    pm.expect(pm.response.text()).to.include(61);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -116,7 +123,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{restapi_url}}/api/v1/employee/{{id}}",
+					"raw": "{{restapi_url}}/api/v1/employee/1",
 					"host": [
 						"{{restapi_url}}"
 					],
@@ -124,7 +131,7 @@
 						"api",
 						"v1",
 						"employee",
-						"{{id}}"
+						"1"
 					]
 				}
 			},
@@ -139,9 +146,7 @@
 						"exec": [
 							"pm.test(\"Successful response\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"success\");",
-							"});",
-							"var json = pm.response.json();",
-							"pm.environment.set(\"id\", json.data.id);"
+							"});"
 						],
 						"type": "text/javascript"
 					}
