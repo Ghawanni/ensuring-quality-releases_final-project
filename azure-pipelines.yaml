@@ -60,11 +60,21 @@ stages:
     - task: CmdLine@2
       displayName: "Jmeter Load Test"
       inputs:
-        script: 'jmeter -n -t $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/Load.jmx -l $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load-results-report.csv -e -o $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load_html_report'
+        script: |
+          rm load-results-report.csv
+          touch load-results-report.csv
+          mkdir -p load_html_report
+          jmeter -n -t Load.jmx -l load-results-report.csv -e -o load_html_report
+        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/'
     - task: CmdLine@2
       displayName: "Jmeter Endurance Test"
       inputs:
-        script: 'jmeter -n -t $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/Endurance.jmx -l $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance-results-report.csv -e -o $(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance_html_report'
+        script: |
+          rm endurance-results-report.csv
+          touch endurance-results-report.csv
+          mkdir -p endurance_html_report
+          jmeter -n -t Endurance.jmx -l endurance-results-report.csv -e -o endurance_html_report
+        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance_html_report'
