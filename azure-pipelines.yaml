@@ -24,8 +24,6 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
-- stage: Deploy
-  jobs:  
   - deployment: FakeRestAPI
     pool:
       vmImage: 'Ubuntu-16.04'
