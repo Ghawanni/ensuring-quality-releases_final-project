@@ -75,12 +75,10 @@ stages:
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance_html_report'
         ArtifactName: 'drop-endurance-report'
-        publishLocation: 'Container'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load_html_report'
         ArtifactName: 'drop-load-report'
-        publishLocation: 'Container'
   # - deployment: VMDeploy
   #   displayName: NAME
   #   environment:
