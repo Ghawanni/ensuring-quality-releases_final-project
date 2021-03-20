@@ -1,0 +1,9 @@
+variable "application_type" {}
+variable "resource_type" {}
+variable "location" {}
+variable "resource_group" {}
+variable "public_ip_address_id" {}
+variable "address_prefix_test" {}
+variable "virtual_network_name" {}
+variable "vm_size" {}
+variable "virtual_network_subnet_id" {}
