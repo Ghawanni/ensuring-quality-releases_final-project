@@ -112,13 +112,9 @@ stages:
           steps:
           - task: Bash@3
             inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-                
-                sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install unzip -y
-                sudo apt-get install -y chromium-browser
-                pip3 install selenium
-                export PATH=$PATH:some/path
+              filePath: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium/makefile'
+              arguments: 'make install'
+          - task: PythonScript@0
+            inputs:
+              scriptSource: 'filePath'
+              scriptPath: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium/login.py'
