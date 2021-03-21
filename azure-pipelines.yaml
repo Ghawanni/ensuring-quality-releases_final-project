@@ -103,9 +103,9 @@ stages:
   - deployment: VMDeploy
     displayName: FunctionalUITesting
     environment:
-      name:  TESTrw2q1  `
+      name:  TEST
       resourceType: VirtualMachine
-      tags: TAG NAME
+      tags: TEST
     strategy:
       runOnce:
         deploy:
