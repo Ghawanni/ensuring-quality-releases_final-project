@@ -13,6 +13,42 @@ def login (user, password):
     driver = webdriver.Chrome()
     print ('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
+    username_field = driver.find_element_by_id("user-name")
+    password_field = driver.find_element_by_id("password")
+    username_field.send_keys(user)
+    password_field.send_keys(password)
+    print(f"Logging user {user} in")
+    login_button = driver.find_element_by_id("login-button")
+    login_button.click()
+    print("login successful")
+
+    inventory_items = driver.find_elements_by_class_name("inventory_item")
+    print("getting inventory items")
+    for inventory_item in inventory_items:
+        item_name = inventory_item.find_element_by_class_name("inventory_item_label").find_element_by_class_name("inventory_item_name").text
+        print("Got item name")
+        price_bar_element = inventory_item.find_element_by_class_name("pricebar")
+        print("Got the price bar")
+        add_to_cart_button = price_bar_element.find_element_by_class_name("btn_inventory")
+        print("Adding item...")
+        add_to_cart_button.click()
+        print(f"item {item_name} added!")
+
+    print("All items added to the cart!")
+    print("-----------------------------")
+    print("-----------------------------")
+    print("Removing Items...")
+    for inventory_item in inventory_items:
+        item_name = inventory_item.find_element_by_class_name("inventory_item_label").find_element_by_class_name("inventory_item_name").text
+        print("Got item name")
+        price_bar_element = inventory_item.find_element_by_class_name("pricebar")
+        print("Got the price bar")
+        add_to_cart_button = price_bar_element.find_element_by_class_name("btn_inventory")
+        print("Removing item...")
+        add_to_cart_button.click()
+        print(f"item {item_name} removed!")
+    
+    print("The cart is now empty!")
 
 login('standard_user', 'secret_sauce')
 

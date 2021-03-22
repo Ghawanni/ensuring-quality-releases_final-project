@@ -7,3 +7,4 @@ variable "address_prefix_test" {}
 variable "virtual_network_name" {}
 variable "vm_size" {}
 variable "virtual_network_subnet_id" {}
+variable "public_key" {}

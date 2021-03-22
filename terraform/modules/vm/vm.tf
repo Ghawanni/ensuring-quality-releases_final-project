@@ -29,7 +29,7 @@ resource "azurerm_linux_virtual_machine" "test-vm" {
   ]
   admin_ssh_key {
     username   = "mghawanni"
-    public_key = file("~/.ssh/terraform-id.pub")
+    public_key = "${var.public_key}"
   }
   os_disk {
     caching           = "ReadWrite"
