@@ -2,18 +2,51 @@ name: Azure Pipelines
 variables:
   python.version: '3.7.6'
 stages:
-- stage: Build
+- stage: Provisioning
   jobs:
-  - job: Build
-    pool:
-      name: Hosted Ubuntu 1604
+  - job: Provision
+    displayName: Provisioning With Terraform
     steps:
     # Needed for Terraform VM deployment
-    - task: InstallSSHKey@0
-      inputs:
-        knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ'
-        sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC210fnU86sv+NxgsyUECP/fvoAsrLD0PUT/GjYSyK9emRqSIiwfK47Tqp1e7WxP18WiFladcKXpSjO1+kx5L1dDydDWcBI/3vnULdlOdmNRnhb2b83hrTWolHbVgpryY4OLQSDoxWv6VcSOdfVOTthGjF1G1dHzdx91a1xaT7e9viOOL104yLXYKAgT0X/IgZrUM1M48ua+mTmC+IxAB+XegnuN3x/buY0vSvGKoWNkQUnKUkPSHqBbvuIxVHfzAeh50xUbG/9ZXoteHF0L2l0IN9UUY0nR0epoE46faDSvvS3Z56bUo14a8n6hsdaWWk574Gu/cSeWWRYXkFkp48WC0EoZeRUDHb2atkbNZl4eaqKWfJpbpjcRzYSOWSORgyb//l0jP/GOiT40xJdJuY0pfZZXAW4mI/RUNtKc/RWPCRUjxH8ZBI7LsUETNCT7iWZ6dXkPX6yh7EruJIYsE2nauVS/hhvy4CETXOSjlIOZAJLq0tHGpBp4whbGjDEPuU= mohammedghawanni@Mohammeds-MacBook-Pro-4.local'
-        sshKeySecureFile: 'terraform-id'
+      - task: InstallSSHKey@0
+        displayName: install SSH Key for Terraform VM
+        inputs:
+          knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ'
+          sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC210fnU86sv+NxgsyUECP/fvoAsrLD0PUT/GjYSyK9emRqSIiwfK47Tqp1e7WxP18WiFladcKXpSjO1+kx5L1dDydDWcBI/3vnULdlOdmNRnhb2b83hrTWolHbVgpryY4OLQSDoxWv6VcSOdfVOTthGjF1G1dHzdx91a1xaT7e9viOOL104yLXYKAgT0X/IgZrUM1M48ua+mTmC+IxAB+XegnuN3x/buY0vSvGKoWNkQUnKUkPSHqBbvuIxVHfzAeh50xUbG/9ZXoteHF0L2l0IN9UUY0nR0epoE46faDSvvS3Z56bUo14a8n6hsdaWWk574Gu/cSeWWRYXkFkp48WC0EoZeRUDHb2atkbNZl4eaqKWfJpbpjcRzYSOWSORgyb//l0jP/GOiT40xJdJuY0pfZZXAW4mI/RUNtKc/RWPCRUjxH8ZBI7LsUETNCT7iWZ6dXkPX6yh7EruJIYsE2nauVS/hhvy4CETXOSjlIOZAJLq0tHGpBp4whbGjDEPuU= mohammedghawanni@Mohammeds-MacBook-Pro-4.local'
+          sshKeySecureFile: 'terraform-id'
+      - task: TerraformInstaller@0
+        displayName: Install Terraform v0.12.3
+        inputs:
+          terraformVersion: '0.12.12'
+      - task: TerraformTaskV1@0
+        displayName: run Terraform init
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+          backendServiceArm: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
+          backendAzureRmResourceGroupName: 'tstate'
+          backendAzureRmStorageAccountName: 'tstate5776'
+          backendAzureRmContainerName: 'tstate'
+          backendAzureRmKey: 'terraform.tfstate'
+      - task: TerraformTaskV1@0
+        displayName: run Terraform plan
+        inputs:
+          provider: 'azurerm'
+          command: 'plan'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+          environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
+          commandOptions: -var client_secret=${ARM_CLIENT_SECRET}"
+      - task: TerraformTaskV1@0
+        displayName: run Terraform apply
+        inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+          commandOptions: '-auto-approve'
+          environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
+  - job: Archive
+    steps:
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
@@ -90,6 +123,7 @@ stages:
           workingDirectory: '$(System.DefaultWorkingDirectory)'
       - task: CmdLine@2
         displayName: Run Newman Runner
+        continueOnError: true
         inputs:
           script: newman run StarterAPIs.json -e final_project_postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml 
           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/'
@@ -99,27 +133,30 @@ stages:
           testResultsFiles: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/*.xml'
           searchFolder: 
           testRunTitle: 'Integration Tests'
-  # - deployment: VMDeploy
-  #   displayName: NAME
-  #   environment:
-  #     name:  ENVIRONMENT NAME
-  #     resourceType: VirtualMachine
-  #     tags: TAG NAME
-  #   strategy:
-  #     runOnce:
-  #       deploy:
-  #         steps:
-  #         - task: Bash@3
-  #           inputs:
-  #             targetType: 'inline'
-  #             script: |
-  #               #! /bin/bash
-                
-  #               sudo apt-get upgrade -y
-  #               sudo apt-get install python3-pip -y
-  #               sudo apt-get install unzip -y
-  #               sudo apt-get install -y chromium-browser
-  #               pip3 install selenium
-  #               export PATH=$PATH:some/path
-
-
+  - deployment: VMDeploy
+    pool:
+      name: Hosted Ubuntu 1604
+    displayName: FunctionalUITesting
+    environment:
+      name:  UI_TEST
+      resourceType: VirtualMachine
+      tags: UI_TEST
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: Bash@3
+            displayName: 'Install Selenium Using Makefile'
+            inputs:
+              filePath: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium/makefile'
+              arguments: 'make install'
+          - task: Bash@3
+            displayName: 'Run Selenium Tests'
+            inputs:
+              targetType: 'inline'
+              script: |
+                sudo mkdir /var/logs
+                cd $(System.DefaultWorkingDirectory)/automatedtesting/selenium
+                echo $(date "+%Y-%m-%d %H:%M:%S") >> /var/logs/selenium-test.log
+                python3 login.py >> /var/logs/selenium-test.log
+                cat /var/logs/selenium-test.log
