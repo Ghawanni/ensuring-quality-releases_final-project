@@ -1,6 +1,8 @@
 name: Azure Pipelines
 variables:
-  python.version: '3.7.6'
+- group: 'Terraform Variables'
+- name: 'python.version'
+  value: '3.7.6'
 stages:
 - stage: Provisioning
   jobs:
