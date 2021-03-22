@@ -1,6 +1,8 @@
 name: Azure Pipelines
 variables:
-  python.version: '3.7.6'
+- group: 'Terraform Variables'
+- name: 'python.version'
+  value: '3.7.6'
 stages:
 - stage: Provisioning
   jobs:
@@ -12,7 +14,7 @@ stages:
         displayName: install SSH Key for Terraform VM
         inputs:
           knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ'
-          sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC210fnU86sv+NxgsyUECP/fvoAsrLD0PUT/GjYSyK9emRqSIiwfK47Tqp1e7WxP18WiFladcKXpSjO1+kx5L1dDydDWcBI/3vnULdlOdmNRnhb2b83hrTWolHbVgpryY4OLQSDoxWv6VcSOdfVOTthGjF1G1dHzdx91a1xaT7e9viOOL104yLXYKAgT0X/IgZrUM1M48ua+mTmC+IxAB+XegnuN3x/buY0vSvGKoWNkQUnKUkPSHqBbvuIxVHfzAeh50xUbG/9ZXoteHF0L2l0IN9UUY0nR0epoE46faDSvvS3Z56bUo14a8n6hsdaWWk574Gu/cSeWWRYXkFkp48WC0EoZeRUDHb2atkbNZl4eaqKWfJpbpjcRzYSOWSORgyb//l0jP/GOiT40xJdJuY0pfZZXAW4mI/RUNtKc/RWPCRUjxH8ZBI7LsUETNCT7iWZ6dXkPX6yh7EruJIYsE2nauVS/hhvy4CETXOSjlIOZAJLq0tHGpBp4whbGjDEPuU= mohammedghawanni@Mohammeds-MacBook-Pro-4.local'
+          sshPublicKey: '$(PublicKey)'
           sshKeySecureFile: 'terraform-id'
       - task: TerraformInstaller@0
         displayName: Install Terraform v0.12.3
@@ -36,14 +38,14 @@ stages:
           command: 'plan'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
           environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
-          commandOptions: -var client_secret=${ARM_CLIENT_SECRET}"
+          commandOptions: -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)"
       - task: TerraformTaskV1@0
         displayName: run Terraform apply
         inputs:
           provider: 'azurerm'
           command: 'apply'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-          commandOptions: '-auto-approve'
+          commandOptions: -auto-approve -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)"
           environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
   - job: Archive
     steps:
