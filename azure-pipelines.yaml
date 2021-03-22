@@ -177,5 +177,5 @@ stages:
                 sudo mkdir /var/logs
                 cd $(Pipeline.Workspace)/drop-selenium
                 echo $(date "+%Y-%m-%d %H:%M:%S") | sudo tee -a /var/logs/selenium-test.log
-                python3 login.py | sudo tee -a /var/logs/selenium-test.log
+                python login.py | sudo tee -a /var/logs/selenium-test.log
                 sudo cat /var/logs/selenium-test.log
