@@ -143,10 +143,11 @@ stages:
         deploy:
           steps:
           - task: Bash@3
-            displayName: 'Install Selenium Using Makefile'
+            displayName: 'Run Selenium Tests'
             inputs:
-              filePath: $(System.DefaultWorkingDirectory)/automatedtesting/selenium
-              arguments: 'make install'
+              targetType: 'inline'
+              script: 'make install'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
           - task: Bash@3
             displayName: 'Run Selenium Tests'
             inputs:
