@@ -16,3 +16,5 @@ variable address_space {}
 
 # VM
 variable "vm_size" {}
+variable "public_key" {}
+variable "storage_account_access_key" {}
