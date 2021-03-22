@@ -162,9 +162,9 @@ stages:
               targetType: 'inline'
               script: |
                 cd $(Pipeline.Workspace)/drop-selenium
-                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium-tests -d .
+                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip -d .
           - task: Bash@3
-            displayName: 'Run Selenium Tests'
+            displayName: 'Install Selenium Dependencies'
             inputs:
               targetType: 'inline'
               script: 'sudo make install'
