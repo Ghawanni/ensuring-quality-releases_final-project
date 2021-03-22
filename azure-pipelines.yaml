@@ -145,7 +145,7 @@ stages:
           - task: Bash@3
             displayName: 'Install Selenium Using Makefile'
             inputs:
-              filePath: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+              filePath: $(System.DefaultWorkingDirectory)/automatedtesting/selenium
               arguments: 'make install'
           - task: Bash@3
             displayName: 'Run Selenium Tests'
