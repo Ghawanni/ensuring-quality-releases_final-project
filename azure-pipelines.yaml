@@ -4,6 +4,7 @@ variables:
 stages:
 - stage: Build
   jobs:
+  
   - job: Build
     pool:
       name: Hosted Ubuntu 1604
@@ -103,9 +104,9 @@ stages:
   - deployment: VMDeploy
     displayName: FunctionalUITesting
     environment:
-      name:  TEST
+      name:  UI_TEST
       resourceType: VirtualMachine
-      tags: TEST
+      tags: UI_TEST
     strategy:
       runOnce:
         deploy:
