@@ -47,18 +47,29 @@ stages:
 #           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 #           commandOptions: -auto-approve -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)"
 #           environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
-#   - job: Archive
-#     steps:
-#     - task: ArchiveFiles@2
-#       displayName: 'Archive FakeRestAPI'
-#       inputs:
-#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-#         includeRootFolder: false
-#         archiveType: 'zip'
-#         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-#     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-#       displayName: 'Upload Package'
-#       artifact: drop-fakerestapi
+  - job: ArchiveAPI
+    steps:
+    # - task: ArchiveFiles@2
+    #   displayName: 'Archive FakeRestAPI'
+    #   inputs:
+    #     rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
+    #     includeRootFolder: false
+    #     archiveType: 'zip'
+    #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    # - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+    #   displayName: 'Upload Package'
+    #   artifact: drop-fakerestapi
+    - task: ArchiveFiles@2
+      displayName: Archive Selenium UI Test
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
+      displayName: 'Upload Package'
+      artifact: drop-selenium
+
 # - stage: Deploy
   # jobs:
   # - deployment: FakeRestAPI
@@ -142,19 +153,29 @@ stages:
       runOnce:
         deploy:
           steps:
+          - download: current
+            displayName: Download Selenium Artifact
+            artifact: drop-selenium
+          - task: Bash@3
+            displayName: 'Extract Selenium drop'
+            inputs:
+              targetType: 'inline'
+              script: |
+                cd $(Pipeline.Workspace)/drop-selenium
+                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium-tests -d .
           - task: Bash@3
             displayName: 'Run Selenium Tests'
             inputs:
               targetType: 'inline'
-              script: 'make install'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+              script: 'sudo make install'
+              workingDirectory: '$(Pipeline.Workspace)/drop-selenium'
           - task: Bash@3
             displayName: 'Run Selenium Tests'
             inputs:
               targetType: 'inline'
               script: |
                 sudo mkdir /var/logs
-                cd $(System.DefaultWorkingDirectory)/automatedtesting/selenium
+                cd $(Pipeline.Workspace)/drop-selenium
                 echo $(date "+%Y-%m-%d %H:%M:%S") >> /var/logs/selenium-test.log
                 python3 login.py >> /var/logs/selenium-test.log
                 cat /var/logs/selenium-test.log
