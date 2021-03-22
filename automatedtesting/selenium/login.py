@@ -17,7 +17,7 @@ def login (user, password):
     password_field = driver.find_element_by_id("password")
     username_field.send_keys(user)
     password_field.send_keys(password)
-    print(f"Logging user {user} in")
+    print("Logging user {} in".format(user))
     login_button = driver.find_element_by_id("login-button")
     login_button.click()
     print("login successful")
@@ -32,7 +32,7 @@ def login (user, password):
         add_to_cart_button = price_bar_element.find_element_by_class_name("btn_inventory")
         print("Adding item...")
         add_to_cart_button.click()
-        print(f"item {item_name} added!")
+        print("item {} added!".format(item_name))
 
     print("All items added to the cart!")
     print("-----------------------------")
@@ -46,7 +46,7 @@ def login (user, password):
         add_to_cart_button = price_bar_element.find_element_by_class_name("btn_inventory")
         print("Removing item...")
         add_to_cart_button.click()
-        print(f"item {item_name} removed!")
+        print("item {} removed!".format(item_name))
     
     print("The cart is now empty!")
 
