@@ -162,9 +162,9 @@ stages:
               targetType: 'inline'
               script: |
                 cd $(Pipeline.Workspace)/drop-selenium
-                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium-tests -d .
+                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip -d .
           - task: Bash@3
-            displayName: 'Run Selenium Tests'
+            displayName: 'Install Selenium Dependencies'
             inputs:
               targetType: 'inline'
               script: 'sudo make install'
@@ -176,6 +176,6 @@ stages:
               script: |
                 sudo mkdir /var/logs
                 cd $(Pipeline.Workspace)/drop-selenium
-                echo $(date "+%Y-%m-%d %H:%M:%S") >> /var/logs/selenium-test.log
-                python3 login.py >> /var/logs/selenium-test.log
-                cat /var/logs/selenium-test.log
+                echo $(date "+%Y-%m-%d %H:%M:%S") | sudo tee -a /var/logs/selenium-test.log
+                python login.py | sudo tee -a /var/logs/selenium-test.log
+                sudo cat /var/logs/selenium-test.log
