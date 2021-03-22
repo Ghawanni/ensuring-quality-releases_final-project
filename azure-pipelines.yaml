@@ -38,14 +38,14 @@ stages:
           command: 'plan'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
           environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
-          commandOptions: -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)"
+          commandOptions: -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)" -var "storage_account_access_key=$(StorageAccountAccessKey)"
       - task: TerraformTaskV1@0
         displayName: run Terraform apply
         inputs:
           provider: 'azurerm'
           command: 'apply'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-          commandOptions: -auto-approve -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)"
+          commandOptions: -auto-approve -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)" -var "storage_account_access_key=$(StorageAccountAccessKey)"
           environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
   - job: Archive
     steps:
