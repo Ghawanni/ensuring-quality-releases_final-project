@@ -9,56 +9,56 @@ stages:
   - job: Provision
     displayName: Provisioning With Terraform
     steps:
-#     # Needed for Terraform VM deployment
+    # Needed for Terraform VM deployment
       - task: InstallSSHKey@0
         displayName: install SSH Key for Terraform VM
         inputs:
           knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ'
           sshPublicKey: '$(PublicKey)'
           sshKeySecureFile: 'terraform-id'
-#       - task: TerraformInstaller@0
-#         displayName: Install Terraform v0.12.3
-#         inputs:
-#           terraformVersion: '0.12.12'
-#       - task: TerraformTaskV1@0
-#         displayName: run Terraform init
-#         inputs:
-#           provider: 'azurerm'
-#           command: 'init'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-#           backendServiceArm: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
-#           backendAzureRmResourceGroupName: 'tstate'
-#           backendAzureRmStorageAccountName: 'tstate5776'
-#           backendAzureRmContainerName: 'tstate'
-#           backendAzureRmKey: 'terraform.tfstate'
-#       - task: TerraformTaskV1@0
-#         displayName: run Terraform plan
-#         inputs:
-#           provider: 'azurerm'
-#           command: 'plan'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-#           environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
-#           commandOptions: -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)"
-#       - task: TerraformTaskV1@0
-#         displayName: run Terraform apply
-#         inputs:
-#           provider: 'azurerm'
-#           command: 'apply'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-#           commandOptions: -auto-approve -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)"
-#           environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
+      - task: TerraformInstaller@0
+        displayName: Install Terraform v0.12.3
+        inputs:
+          terraformVersion: '0.12.12'
+      - task: TerraformTaskV1@0
+        displayName: run Terraform init
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+          backendServiceArm: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
+          backendAzureRmResourceGroupName: 'tstate'
+          backendAzureRmStorageAccountName: 'tstate5776'
+          backendAzureRmContainerName: 'tstate'
+          backendAzureRmKey: 'terraform.tfstate'
+      - task: TerraformTaskV1@0
+        displayName: run Terraform plan
+        inputs:
+          provider: 'azurerm'
+          command: 'plan'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+          environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
+          commandOptions: -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)"
+      - task: TerraformTaskV1@0
+        displayName: run Terraform apply
+        inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+          commandOptions: -auto-approve -var "client_secret=$(ARM_CLIENT_SECRET)" -var "public_key=$(PublicKey)"
+          environmentServiceNameAzureRM: 'ghawanni(4fc8a9ce-bdb4-476f-aa96-2948a69c3f62)'
   - job: ArchiveAPI
     steps:
-    # - task: ArchiveFiles@2
-    #   displayName: 'Archive FakeRestAPI'
-    #   inputs:
-    #     rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-    #     includeRootFolder: false
-    #     archiveType: 'zip'
-    #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    # - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-    #   displayName: 'Upload Package'
-    #   artifact: drop-fakerestapi
+    - task: ArchiveFiles@2
+      displayName: 'Archive FakeRestAPI'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+      displayName: 'Upload Package'
+      artifact: drop-fakerestapi
     - task: ArchiveFiles@2
       displayName: Archive Selenium UI Test
       inputs:
@@ -70,82 +70,82 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-selenium
 
-# - stage: Deploy
-  # jobs:
-  # - deployment: FakeRestAPI
-  #   pool:
-  #     vmImage: 'Ubuntu-16.04'
-  #   environment: 'TEST'
-  #   strategy:
-  #     runOnce:
-  #       deploy:
-  #         steps:
-  #         - download: current
-  #           displayName: Download FakeRestAPI Artifact
-  #           artifact: drop-fakerestapi
+- stage: Deploy
+  jobs:
+  - deployment: FakeRestAPI
+    pool:
+      name: 'Hosted Ubuntu 1604'
+    environment: 'TEST'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            displayName: Download FakeRestAPI Artifact
+            artifact: drop-fakerestapi
 
-  #         - task: AzureRmWebAppDeployment@4
-  #           displayName: 'Deploy Azure Web App (FakeRestAPI)'
-  #           inputs:
-  #             ConnectionType: 'AzureRM'
-  #             azureSubscription: 'DEMA Final Project CI/CD'
-  #             appType: 'webApp'
-  #             WebAppName: 'Ghawanni-Udacity-Final-Project-AppService'
-  #             packageForLinux: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
-  #             enableCustomDeployment: true
-  #             DeploymentType: 'zipDeploy'
+          - task: AzureRmWebAppDeployment@4
+            displayName: 'Deploy Azure Web App (FakeRestAPI)'
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'DEMA Final Project CI/CD'
+              appType: 'webApp'
+              WebAppName: 'Ghawanni-Udacity-Final-Project-AppService'
+              packageForLinux: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
+              enableCustomDeployment: true
+              DeploymentType: 'zipDeploy'
 - stage: Test
   jobs:
-  # - job: LoadTest
-  #   pool:
-  #     name: Hosted Ubuntu 1604
-  #   steps:
-  #   - task: JMeterInstaller@0
-  #     inputs:
-  #       jmeterVersion: '5.2.1'
-  #   - task: CmdLine@2
-  #     displayName: "Jmeter Load Test"
-  #     inputs:
-  #       script: |
-  #         mkdir -p load_html_report
-  #         jmeter -n -t Load.jmx -l load-results-report.csv -e -o load_html_report
-  #       workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/'
-  #   - task: CmdLine@2
-  #     displayName: "Jmeter Endurance Test"
-  #     inputs:
-  #       script: |
-  #         mkdir -p endurance_html_report
-  #         jmeter -n -t Endurance.jmx -l endurance-results-report.csv -e -o endurance_html_report
-  #       workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/'
-  #   - task: PublishBuildArtifacts@1
-  #     inputs:
-  #       PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance_html_report'
-  #       ArtifactName: 'drop-endurance-report'
-  #   - task: PublishBuildArtifacts@1
-  #     inputs:
-  #       PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load_html_report'
-  #       ArtifactName: 'drop-load-report'
-  # - job: IntegrationTesting
-  #   pool:
-  #     name: Hosted Ubuntu 1604
-  #   steps:
-  #     - task: CmdLine@2
-  #       displayName: Install Newman Runner
-  #       inputs: 
-  #         script: sudo npm install -g newman
-  #         workingDirectory: '$(System.DefaultWorkingDirectory)'
-  #     - task: CmdLine@2
-  #       displayName: Run Newman Runner
-  #       continueOnError: true
-  #       inputs:
-  #         script: newman run StarterAPIs.json -e final_project_postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml 
-  #         workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/'
-  #     - task: PublishTestResults@2
-  #       inputs:
-  #         testResultsFormat: 'JUnit'
-  #         testResultsFiles: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/*.xml'
-  #         searchFolder: 
-  #         testRunTitle: 'Integration Tests'
+  - job: LoadTest
+    pool:
+      name: Hosted Ubuntu 1604
+    steps:
+    - task: JMeterInstaller@0
+      inputs:
+        jmeterVersion: '5.2.1'
+    - task: CmdLine@2
+      displayName: "Jmeter Load Test"
+      inputs:
+        script: |
+          mkdir -p load_html_report
+          jmeter -n -t Load.jmx -l load-results-report.csv -e -o load_html_report
+        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/'
+    - task: CmdLine@2
+      displayName: "Jmeter Endurance Test"
+      inputs:
+        script: |
+          mkdir -p endurance_html_report
+          jmeter -n -t Endurance.jmx -l endurance-results-report.csv -e -o endurance_html_report
+        workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/endurance_html_report'
+        ArtifactName: 'drop-endurance-report'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/load_html_report'
+        ArtifactName: 'drop-load-report'
+  - job: IntegrationTesting
+    pool:
+      name: Hosted Ubuntu 1604
+    steps:
+      - task: CmdLine@2
+        displayName: Install Newman Runner
+        inputs: 
+          script: sudo npm install -g newman
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+      - task: CmdLine@2
+        displayName: Run Newman Runner
+        continueOnError: true
+        inputs:
+          script: newman run StarterAPIs.json -e final_project_postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml 
+          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/*.xml'
+          searchFolder: 
+          testRunTitle: 'Integration Tests'
   - deployment: VMDeploy
     displayName: FunctionalUITesting
     environment: 
@@ -163,7 +163,6 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                sudo apt-get install unzip
                 cd $(Pipeline.Workspace)/drop-selenium
                 unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip -d .
           - task: Bash@3
