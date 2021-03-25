@@ -1,0 +1,118 @@
+2021-03-22T20:52:50.7185268Z 2021-03-22 20:52:50
+2021-03-22T20:52:55.8923189Z Starting the browser...
+2021-03-22T20:52:55.8923869Z Browser started successfully. Navigating to the demo page to login.
+2021-03-22T20:52:55.8924207Z Logging user standard_user in
+2021-03-22T20:52:55.8924485Z login successful
+2021-03-22T20:52:55.8924908Z getting inventory items
+2021-03-22T20:52:55.8925555Z Got item name
+2021-03-22T20:52:55.8925796Z Got the price bar
+2021-03-22T20:52:55.8926033Z Adding item...
+2021-03-22T20:52:55.8926273Z item Sauce Labs Backpack added!
+2021-03-22T20:52:55.8926712Z Got item name
+2021-03-22T20:52:55.8926989Z Got the price bar
+2021-03-22T20:52:55.8927251Z Adding item...
+2021-03-22T20:52:55.8927553Z item Sauce Labs Bike Light added!
+2021-03-22T20:52:55.8927856Z Got item name
+2021-03-22T20:52:55.8928114Z Got the price bar
+2021-03-22T20:52:55.8928393Z Adding item...
+2021-03-22T20:52:55.8929264Z item Sauce Labs Bolt T-Shirt added!
+2021-03-22T20:52:55.8929603Z Got item name
+2021-03-22T20:52:55.8930177Z Got the price bar
+2021-03-22T20:52:55.8930405Z Adding item...
+2021-03-22T20:52:55.8930675Z item Sauce Labs Fleece Jacket added!
+2021-03-22T20:52:55.8930955Z Got item name
+2021-03-22T20:52:55.8931180Z Got the price bar
+2021-03-22T20:52:55.8931423Z Adding item...
+2021-03-22T20:52:55.8931680Z item Sauce Labs Onesie added!
+2021-03-22T20:52:55.8931925Z Got item name
+2021-03-22T20:52:55.8932172Z Got the price bar
+2021-03-22T20:52:55.8932413Z Adding item...
+2021-03-22T20:52:55.8932876Z item Test.allTheThings() T-Shirt (Red) added!
+2021-03-22T20:52:55.8933196Z All items added to the cart!
+2021-03-22T20:52:55.8933636Z -----------------------------
+2021-03-22T20:52:55.8934056Z -----------------------------
+2021-03-22T20:52:55.8934336Z Removing Items...
+2021-03-22T20:52:55.8935062Z Got item name
+2021-03-22T20:52:55.8935299Z Got the price bar
+2021-03-22T20:52:55.8935547Z Removing item...
+2021-03-22T20:52:55.8935815Z item Sauce Labs Backpack removed!
+2021-03-22T20:52:55.8936068Z Got item name
+2021-03-22T20:52:55.8936308Z Got the price bar
+2021-03-22T20:52:55.8936553Z Removing item...
+2021-03-22T20:52:55.8936982Z item Sauce Labs Bike Light removed!
+2021-03-22T20:52:55.8937599Z Got item name
+2021-03-22T20:52:55.8937876Z Got the price bar
+2021-03-22T20:52:55.8938140Z Removing item...
+2021-03-22T20:52:55.8938690Z item Sauce Labs Bolt T-Shirt removed!
+2021-03-22T20:52:55.8939018Z Got item name
+2021-03-22T20:52:55.8939287Z Got the price bar
+2021-03-22T20:52:55.8939569Z Removing item...
+2021-03-22T20:52:55.8939883Z item Sauce Labs Fleece Jacket removed!
+2021-03-22T20:52:55.8940178Z Got item name
+2021-03-22T20:52:55.8940759Z Got the price bar
+2021-03-22T20:52:55.8941179Z Removing item...
+2021-03-22T20:52:55.8941463Z item Sauce Labs Onesie removed!
+2021-03-22T20:52:55.8941745Z Got item name
+2021-03-22T20:52:55.8941986Z Got the price bar
+2021-03-22T20:52:55.8942248Z Removing item...
+2021-03-22T20:52:55.8943040Z item Test.allTheThings() T-Shirt (Red) removed!
+2021-03-22T20:52:55.8943327Z The cart is now empty!
+2021-03-22T20:52:56.8890262Z 2021-03-22 20:52:50
+2021-03-22T20:52:56.8891448Z Starting the browser...
+2021-03-22T20:52:56.8892167Z Browser started successfully. Navigating to the demo page to login.
+2021-03-22T20:52:56.8893243Z Logging user standard_user in
+2021-03-22T20:52:56.8894378Z login successful
+2021-03-22T20:52:56.8894770Z getting inventory items
+2021-03-22T20:52:56.8895153Z Got item name
+2021-03-22T20:52:56.8895525Z Got the price bar
+2021-03-22T20:52:56.8896138Z Adding item...
+2021-03-22T20:52:56.8896531Z item Sauce Labs Backpack added!
+2021-03-22T20:52:56.8896908Z Got item name
+2021-03-22T20:52:56.8897280Z Got the price bar
+2021-03-22T20:52:56.8897655Z Adding item...
+2021-03-22T20:52:56.8898033Z item Sauce Labs Bike Light added!
+2021-03-22T20:52:56.8898423Z Got item name
+2021-03-22T20:52:56.8898950Z Got the price bar
+2021-03-22T20:52:56.8899297Z Adding item...
+2021-03-22T20:52:56.8900368Z item Sauce Labs Bolt T-Shirt added!
+2021-03-22T20:52:56.8900951Z Got item name
+2021-03-22T20:52:56.8901390Z Got the price bar
+2021-03-22T20:52:56.8901808Z Adding item...
+2021-03-22T20:52:56.8902270Z item Sauce Labs Fleece Jacket added!
+2021-03-22T20:52:56.8902759Z Got item name
+2021-03-22T20:52:56.8903171Z Got the price bar
+2021-03-22T20:52:56.8903768Z Adding item...
+2021-03-22T20:52:56.8904166Z item Sauce Labs Onesie added!
+2021-03-22T20:52:56.8904548Z Got item name
+2021-03-22T20:52:56.8905084Z Got the price bar
+2021-03-22T20:52:56.8905908Z Adding item...
+2021-03-22T20:52:56.8906774Z item Test.allTheThings() T-Shirt (Red) added!
+2021-03-22T20:52:56.8907243Z All items added to the cart!
+2021-03-22T20:52:56.8907841Z -----------------------------
+2021-03-22T20:52:56.8908469Z -----------------------------
+2021-03-22T20:52:56.8908888Z Removing Items...
+2021-03-22T20:52:56.8909421Z Got item name
+2021-03-22T20:52:56.8909780Z Got the price bar
+2021-03-22T20:52:56.8910613Z Removing item...
+2021-03-22T20:52:56.8911234Z item Sauce Labs Backpack removed!
+2021-03-22T20:52:56.8911689Z Got item name
+2021-03-22T20:52:56.8912656Z Got the price bar
+2021-03-22T20:52:56.8913292Z Removing item...
+2021-03-22T20:52:56.8913872Z item Sauce Labs Bike Light removed!
+2021-03-22T20:52:56.8914179Z Got item name
+2021-03-22T20:52:56.8914639Z Got the price bar
+2021-03-22T20:52:56.8915085Z Removing item...
+2021-03-22T20:52:56.8916442Z item Sauce Labs Bolt T-Shirt removed!
+2021-03-22T20:52:56.8917101Z Got item name
+2021-03-22T20:52:56.8917354Z Got the price bar
+2021-03-22T20:52:56.8917603Z Removing item...
+2021-03-22T20:52:56.8917890Z item Sauce Labs Fleece Jacket removed!
+2021-03-22T20:52:56.8918174Z Got item name
+2021-03-22T20:52:56.8918410Z Got the price bar
+2021-03-22T20:52:56.8918665Z Removing item...
+2021-03-22T20:52:56.8918939Z item Sauce Labs Onesie removed!
+2021-03-22T20:52:56.8919196Z Got item name
+2021-03-22T20:52:56.8919630Z Got the price bar
+2021-03-22T20:52:56.8920042Z Removing item...
+2021-03-22T20:52:56.8921605Z item Test.allTheThings() T-Shirt (Red) removed!
+2021-03-22T20:52:56.8922010Z The cart is now empty!
