@@ -163,6 +163,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
+                sudo apt-get install unzip
                 cd $(Pipeline.Workspace)/drop-selenium
                 unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip -d .
           - task: Bash@3
