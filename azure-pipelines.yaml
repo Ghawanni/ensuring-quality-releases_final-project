@@ -148,7 +148,9 @@ stages:
   #         testRunTitle: 'Integration Tests'
   - deployment: VMDeploy
     displayName: FunctionalUITesting
-    environment: 'TEST'
+    environment: 
+     name: 'TEST'
+     resourceType: VirtualMachine
     strategy:
       runOnce:
         deploy:
